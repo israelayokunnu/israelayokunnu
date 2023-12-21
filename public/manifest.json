@@ -1,0 +1,39 @@
+{
+  "id": "com.israelayokunnu",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "Israel Ayokunnu",
+  "short_name": "Israel Ayokunnu",
+  "description": "Skilled Full-Stack Developer with extensive experience in front-end and back-end technologies, including React, Angular, TypeScript, and Node. Expertise in leading significant architectural initiatives, implementing streamlined CI/CD processes, and driving innovative UI/UX designs. Recognized for spearheading the development of key platforms and mobile applications, focusing on user-centric solutions and leveraging advanced tech stacks to enhance product functionality and user experience. Committed to delivering high-quality software solutions and continuously adapting to the evolving landscape of software development.",
+  "icons": [
+    {
+      "src": "/favicon/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/android-icon-192x192.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/ms-icon-310x310.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/ms-icon-310x310.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "display_override": ["window-controls-overlay"],
+  "url_handlers": [
+    {
+      "origin": "https://israelayokunnu.com"
+    }
+  ]
+}
