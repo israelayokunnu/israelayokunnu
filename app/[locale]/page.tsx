@@ -1,3 +1,5 @@
-export default function Home() {
-  return <main className=''>Hello</main>;
+import Home from './home/page';
+
+export default function Landing() {
+  return <Home />;
 }
