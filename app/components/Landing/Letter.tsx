@@ -33,7 +33,7 @@ const Letter = ({ char, stencilBuffer = false, children, ...props }: Props) => {
         <Text3D
           bevelEnabled
           onDoubleClick={(e) => (
-            e.stopPropagation(), controls.fitToBox(main.current, true)
+            e.stopPropagation(), controls?.fitToBox(main.current, true)
           )}
           font='/fonts/bold.blob'
           smooth={1}

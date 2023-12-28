@@ -21,13 +21,13 @@ const PortalShapeCanvas = () => {
           position={[-10, 50, -1]}
           rotation={[0, 0, 0]}
           stencilBuffer={false}
-        />
+        ></Letter>
         <Letter
           char='A'
           position={[5, 50, -3]}
           rotation={[1, 0, 0]}
           stencilBuffer
-        />
+        ></Letter>
 
         {/** Invisible walls */}
         <CuboidCollider position={[0, -6, 0]} args={[100, 1, 100]} />
