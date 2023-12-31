@@ -9,22 +9,17 @@ const Menu = () => {
   const t = useTranslations('header.menu');
 
   return (
-    <div className='rounded-lg flex flex-row items-center gap-10 bg-cyan-950 pl-8 pr-4 py-4'>
-      <Image
-        src={AnimatedLogo}
-        alt='Israel Ayokunnu - animated logo'
-        className='w-8'
-      />
+    <div className='rounded-xl flex flex-row items-center gap-4 bg-cyan-950 pl-8 pr-4 py-4'>
+      <Link href='/'>
+        <Image
+          src={AnimatedLogo}
+          alt='Israel Ayokunnu - animated logo'
+          className='w-6 lg:w-8'
+        />
+      </Link>
 
-      <div className='flex flex-row font-semibold items-center text-white'>
+      <div className='flex flex-row font-medium items-center text-white'>
         <Link href='#works' scroll className='hover:bg-cyan-900 p-4 rounded-lg'>
-          {t('works')}
-        </Link>
-        <Link
-          href='https://www.playground.israelayokunnu.com'
-          target='_blank'
-          className='hover:bg-cyan-900 p-4 rounded-lg'
-        >
           {t('playground')}
         </Link>
       </div>

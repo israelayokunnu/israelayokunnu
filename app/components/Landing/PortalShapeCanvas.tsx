@@ -1,30 +1,39 @@
 'use client';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, Vector3 } from '@react-three/fiber';
 import {
   Preload,
   Lightformer,
   Environment,
   ContactShadows,
+  Html,
 } from '@react-three/drei';
 import { Physics, CuboidCollider } from '@react-three/rapier';
 import Letter from './Letter';
+import useResponsiveQuery from '@util/hooks/useResponsiveQuery';
 
 const PortalShapeCanvas = () => {
+  const isMobile = useResponsiveQuery(768);
+  // Positions based on whether it's mobile or not
+  const positionI: Vector3 = isMobile ? [-5, 25, 5] : [-10, 50, -1];
+  const positionA: Vector3 = isMobile ? [5, 15, 2] : [5, 50, -3];
+
+  // Camera settings for mobile
+  const cameraSettings: any = isMobile
+    ? { position: [-5, 15, 50], fov: 40, near: 0.5, far: 300 }
+    : { position: [-20, 30, 150], fov: 9, near: 0.5, far: 300 };
+
   return (
-    <Canvas
-      dpr={[1.5, 2]}
-      camera={{ position: [-20, 30, 150], fov: 9, near: 0.5, far: 300 }}
-    >
+    <Canvas dpr={[1.5, 2]} camera={cameraSettings}>
       <Physics gravity={[0, -60, 0]}>
         <Letter
           char='I'
-          position={[-10, 50, -1]}
+          position={positionI}
           rotation={[0, 0, 0]}
           stencilBuffer={false}
         ></Letter>
         <Letter
           char='A'
-          position={[5, 50, -3]}
+          position={positionA}
           rotation={[1, 0, 0]}
           stencilBuffer
         ></Letter>

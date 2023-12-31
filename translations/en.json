@@ -8,5 +8,13 @@
       "works": "Works",
       "playground": "Playground"
     }
+  },
+  "home": {
+    "hero": {
+      "text1": "Hello, I'm Israel",
+      "text2": "Full-Stack Developer",
+      "text3": "Crafting End-to-End Digital Excellence",
+      "text4": "Let's Build the Future, Together."
+    }
   }
 }
