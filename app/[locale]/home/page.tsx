@@ -1,7 +1,6 @@
 import Header from '@app/components/Header/Header';
 
 import PortalShapeCanvas from '@app/components/Landing/PortalShapeCanvas';
-import Menu from '@app/components/Menu/Menu';
 import SlideInAnimatedSeriesTexts from '@app/components/SlideInAnimatedSeriesTexts/SlideInAnimatedSeriesTexts';
 import Contacts from '@app/components/contacts/Contacts';
 import SocialLinks from '@app/components/socialLinks/SocialLinks';
@@ -27,14 +26,13 @@ const Home = () => {
                 <div className='font-normal text-md'>{t('hero.text3')}</div>,
               ]}
             />
-            <b>—</b>
+            <b className='fade-in'>—</b>
           </div>
         </div>
 
         <div className='fixed bottom-10 w-screen px-4 md:px-10'>
           <div className='flex justify-between items-center'>
             <SocialLinks />
-            <Menu />
           </div>
         </div>
       </div>

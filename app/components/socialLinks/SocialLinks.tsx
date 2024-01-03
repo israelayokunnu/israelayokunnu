@@ -36,7 +36,7 @@ const SocialLinks: React.FC = () => {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <span className='text-light lowercase'>{link.name}</span>
+          <span className='text-ligh text-sm capitalize'>{link.name}</span>
         </a>
       ))}
     </div>

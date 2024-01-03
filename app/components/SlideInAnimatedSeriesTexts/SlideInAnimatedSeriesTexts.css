@@ -13,7 +13,7 @@
 
 .animated > div.text-top div {
   animation: showTopText 1s;
-  animation-delay: 0.5s;
+  animation-delay: 1s;
   animation-fill-mode: forwards;
   bottom: 0;
   transform: translate(0, 100%);

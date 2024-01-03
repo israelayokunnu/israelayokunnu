@@ -6,7 +6,8 @@
   "header": {
     "menu": {
       "works": "Works",
-      "playground": "Playground"
+      "playground": "Playground",
+      "playground_short_description": "Posting Mini & Major Works in Full Stack Development"
     }
   },
   "home": {
