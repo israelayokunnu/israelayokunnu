@@ -1,8 +1,7 @@
 import Header from '@app/components/Header/Header';
-
 import PortalShapeCanvas from '@app/components/Landing/PortalShapeCanvas';
+import { SkillCanvas } from '@app/components/SkillsCanvas/SkillCanvas';
 import SlideInAnimatedSeriesTexts from '@app/components/SlideInAnimatedSeriesTexts/SlideInAnimatedSeriesTexts';
-import Contacts from '@app/components/contacts/Contacts';
 import SocialLinks from '@app/components/socialLinks/SocialLinks';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -16,7 +15,7 @@ const Home = () => {
       <div className='absolute w-screen h-screen top-0 -z-10 bg-ia-primary'>
         <PortalShapeCanvas />
       </div>
-      <div className='z-10'>
+      <div className='z-10 relative'>
         <div className='p-4 md:p-10 relative w-full'>
           <Header />
           <div className='text-cyan-950 mt-20'>
@@ -35,6 +34,10 @@ const Home = () => {
             <SocialLinks />
           </div>
         </div>
+      </div>
+
+      <div className='absolute top-0 right-0 overflow-hidden w-screen h-screen'>
+        <SkillCanvas />
       </div>
     </div>
   );

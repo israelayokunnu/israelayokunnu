@@ -5,7 +5,6 @@ import {
   Lightformer,
   Environment,
   ContactShadows,
-  Html,
 } from '@react-three/drei';
 import { Physics, CuboidCollider } from '@react-three/rapier';
 import Letter from './Letter';
@@ -14,13 +13,26 @@ import useResponsiveQuery from '@util/hooks/useResponsiveQuery';
 const PortalShapeCanvas = () => {
   const isMobile = useResponsiveQuery(768);
   // Positions based on whether it's mobile or not
-  const positionI: Vector3 = isMobile ? [-5, 25, 5] : [-10, 50, -1];
-  const positionA: Vector3 = isMobile ? [5, 15, 2] : [5, 50, -3];
+  const positionIInitial: Vector3 = isMobile ? [-5, 25, 5] : [-10, 50, -1];
+  const positionAInitial: Vector3 = isMobile ? [5, 15, 2] : [5, 50, -3];
+
+  const positionI: Vector3 = isMobile ? [-5, 25, 5] : [-26, 50, -1];
+  const positionA: Vector3 = isMobile ? [5, 15, 2] : [-15, 40, 1];
 
   // Camera settings for mobile
-  const cameraSettings: any = isMobile
+  const cameraInitialSettings: any = isMobile
     ? { position: [-5, 15, 50], fov: 40, near: 0.5, far: 300 }
     : { position: [-20, 30, 150], fov: 9, near: 0.5, far: 300 };
+
+  const cameraFinalSettings: any = isMobile
+    ? { position: [-5, 15, 50], fov: 40, near: 0.5, far: 300 }
+    : { position: [-100, 30, 100], fov: 12, near: 0.5, far: 300 };
+
+  const cameraSettings: any = isMobile
+    ? { position: [-5, 15, 50], fov: 40, near: 0.5, far: 300 }
+    : { position: [-100, 30, 100], fov: 12, near: 0.5, far: 300 };
+
+  const textScale3D = isMobile ? 0.125 : 0.155;
 
   return (
     <Canvas dpr={[1.5, 2]} camera={cameraSettings}>
@@ -30,12 +42,14 @@ const PortalShapeCanvas = () => {
           position={positionI}
           rotation={[0, 0, 0]}
           stencilBuffer={false}
+          text3DScale={textScale3D}
         ></Letter>
         <Letter
           char='A'
           position={positionA}
-          rotation={[1, 0, 0]}
+          rotation={[-2, 0, 50]}
           stencilBuffer
+          text3DScale={textScale3D}
         ></Letter>
 
         {/** Invisible walls */}

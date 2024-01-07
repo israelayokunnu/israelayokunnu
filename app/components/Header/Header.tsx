@@ -44,7 +44,7 @@ const Header = () => {
           <Link href='#works' scroll className='mt-12 md:mt-0'>
             <SlideInAnimatedSeriesTexts
               nodes={[
-                <p className='uppercase text-sm text-cyan-900 font-semibold'>
+                <p className='uppercase text-sm lg:text-lg text-cyan-900 font-semibold'>
                   {t('playground')}
                 </p>,
                 <p className='text-xs' style={{ maxWidth: 150 }}>
