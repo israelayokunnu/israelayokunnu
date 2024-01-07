@@ -1,48 +1,46 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import {
-  forceSimulation,
-  forceManyBody,
-  forceCenter,
-  forceCollide,
-} from 'd3-force';
+import { quadtree } from 'd3-quadtree';
 
 import { animated, useSpring } from 'react-spring';
 import { TechStackItem } from '@app/services/stack/stack.interface';
 import { TechStackList } from '@app/services/stack/stack.query';
 
 export const SkillCanvas: React.FC = () => {
-  const [techItems, setTechItems] = useState<TechStackItem[]>(
-    TechStackList.map((item) => ({
-      ...item,
-      x: 300 + Math.random() * 50 - 25,
-      y: 300 + Math.random() * 50 - 25,
-      vx: Math.random() * 2 - 1, // Random initial velocity
-      vy: Math.random() * 2 - 1,
-    }))
-  );
+  // Initialize positions and velocities
+  const initialTechItems = TechStackList.map((item) => ({
+    ...item,
+    x: Math.random() * 400 + 50, // Randomize initial position
+    y: Math.random() * 400 + 50,
+    vx: Math.random() * 2 - 1, // Random initial velocity
+    vy: Math.random() * 2 - 1,
+  }));
+
+  const [techItems, setTechItems] = useState<TechStackItem[]>(initialTechItems);
 
   useEffect(() => {
-    const simulation: any = forceSimulation(techItems)
-      .force('charge', forceManyBody().strength(-30))
-      .force('center', forceCenter(300, 300))
-      .force('collision', forceCollide(50))
-      .on('tick', () => setTechItems([...simulation.nodes()]));
+    const tick = () => {
+      setTechItems((currentItems) =>
+        currentItems.map((item) => {
+          // Update positions based on velocity
+          let newX = item.x + item.vx;
+          let newY = item.y + item.vy;
 
-    // Additional effect to start random movement after simulation
-    const timeout = setTimeout(() => {
-      const newTechItems = techItems.map((item) => ({
-        ...item,
-        vx: Math.random() * 2 - 1, // Update velocity for random movement
-        vy: Math.random() * 2 - 1,
-      }));
-      setTechItems(newTechItems);
-    }, 3000); // Start after 3 seconds or when you deem the simulation to be settled
+          // Boundary collision detection
+          const boundarySize = 500;
+          const itemSize = 100;
+          if (newX <= 0 || newX + itemSize >= boundarySize) item.vx *= -1;
+          if (newY <= 0 || newY + itemSize >= boundarySize) item.vy *= -1;
 
-    return () => {
-      simulation.stop();
-      clearTimeout(timeout);
+          // Return updated item
+          return { ...item, x: newX, y: newY };
+        })
+      );
     };
+
+    const intervalId = setInterval(tick, 50);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -54,76 +52,28 @@ export const SkillCanvas: React.FC = () => {
   );
 };
 
-const TechItem: React.FC<TechStackItem> = ({ icon: Icon, ...tech }) => {
-  const [props, set] = useSpring(() => ({
-    xy: [tech.x || 0, tech.y || 0],
-    config: { mass: 10, tension: 550, friction: 140 },
-  }));
-
-  useEffect(() => {
-    set({ xy: [tech.x || 0, tech.y || 0] });
-  }, [tech.x, tech.y]);
-
-  // Function to check if two items are overlapping
-  const areOverlapping = (item1: TechStackItem, item2: TechStackItem) => {
-    const size = 100; // Assuming each item is 100x100
-    return (
-      Math.abs(item1.x - item2.x) < size && Math.abs(item1.y - item2.y) < size
-    );
-  };
-
-  useEffect(() => {
-    const move = () => {
-      // Calculate new position
-      let newX = tech.x + tech.vx;
-      let newY = tech.y + tech.vy;
-
-      // Adjust the boundary collision detection
-      const boundarySize = 500;
-      const itemSize = 100; // Adjust if your item size is different
-      if (newX <= 0 || newX + itemSize >= boundarySize) {
-        tech.vx *= -1;
-        newX = tech.x; // Revert to previous position on collision
-      }
-      if (newY <= 0 || newY + itemSize >= boundarySize) {
-        tech.vy *= -1;
-        newY = tech.y; // Revert to previous position on collision
-      }
-
-      // Check for collisions with other tech items
-      TechStackList.forEach((otherTech) => {
-        if (otherTech.name !== tech.name && areOverlapping(tech, otherTech)) {
-          tech.vx *= -1;
-          tech.vy *= -1;
-        }
-      });
-
-      // Update position
-      set({ xy: [newX, newY] });
-      tech.x = newX;
-      tech.y = newY;
-    };
-
-    const intervalId = setInterval(move, 50);
-
-    return () => clearInterval(intervalId);
-  }, [tech, set]);
-
+const TechItem: React.FC<TechStackItem> = ({
+  icon: Icon,
+  x,
+  y,
+  color,
+  onClick,
+}) => {
   return (
-    <animated.div
+    <div
       className='rounded-2xl flex justify-center items-center text-white text-5xl font-extrabold'
       style={{
-        backgroundColor: tech.color,
+        backgroundColor: color,
         minHeight: 100,
         minWidth: 100,
         width: 'fit-content',
         height: 'fit-content',
-        transform: props.xy.interpolate((x, y) => `translate(${x}px,${y}px)`),
+        transform: `translate(${x}px, ${y}px)`,
         position: 'absolute',
       }}
-      onClick={tech.onClick}
+      onClick={onClick}
     >
       <Icon />
-    </animated.div>
+    </div>
   );
 };
