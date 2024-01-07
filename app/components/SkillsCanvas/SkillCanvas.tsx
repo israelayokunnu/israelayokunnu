@@ -2,40 +2,69 @@
 import React, { useEffect, useState } from 'react';
 import { quadtree } from 'd3-quadtree';
 
-import { animated, useSpring } from 'react-spring';
 import { TechStackItem } from '@app/services/stack/stack.interface';
 import { TechStackList } from '@app/services/stack/stack.query';
 
 export const SkillCanvas: React.FC = () => {
-  // Initialize positions and velocities
-  const initialTechItems = TechStackList.map((item) => ({
-    ...item,
-    x: Math.random() * 400 + 50, // Randomize initial position
-    y: Math.random() * 400 + 50,
-    vx: Math.random() * 2 - 1, // Random initial velocity
-    vy: Math.random() * 2 - 1,
-  }));
+  // Function to calculate grid positions
+  const calculateGridPosition = (index, gridWidth, itemSize) => {
+    const x = (index % gridWidth) * itemSize + itemSize / 2;
+    const y = Math.floor(index / gridWidth) * itemSize + itemSize / 2;
+    return { x, y };
+  };
+
+  // Grid dimensions
+  const gridWidth = Math.floor(500 / 100); // Adjust based on container and item sizes
+  const itemSize = 100; // Size of each tech item
+
+  const initialTechItems = TechStackList.map((item, index) => {
+    // Get grid position
+    const gridPosition = calculateGridPosition(index, gridWidth, itemSize);
+    // Apply a small random offset
+    const x = gridPosition.x + (Math.random() * 40 - 20);
+    const y = gridPosition.y + (Math.random() * 40 - 20);
+
+    return {
+      ...item,
+      x: Math.min(Math.max(x, 0), 500 - itemSize), // Ensure within boundary
+      y: Math.min(Math.max(y, 0), 500 - itemSize),
+      vx: Math.random() * 2 - 1,
+      vy: Math.random() * 2 - 1,
+    };
+  });
 
   const [techItems, setTechItems] = useState<TechStackItem[]>(initialTechItems);
 
   useEffect(() => {
     const tick = () => {
-      setTechItems((currentItems) =>
-        currentItems.map((item) => {
-          // Update positions based on velocity
+      setTechItems((currentItems) => {
+        return currentItems.map((item, index) => {
           let newX = item.x + item.vx;
           let newY = item.y + item.vy;
-
-          // Boundary collision detection
           const boundarySize = 500;
           const itemSize = 100;
+
+          // Boundary collision detection
           if (newX <= 0 || newX + itemSize >= boundarySize) item.vx *= -1;
           if (newY <= 0 || newY + itemSize >= boundarySize) item.vy *= -1;
 
-          // Return updated item
+          // Overlap resolution with other items
+          currentItems.forEach((otherItem, otherIndex) => {
+            if (index !== otherIndex) {
+              const dx = otherItem.x - newX;
+              const dy = otherItem.y - newY;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+              if (distance < itemSize) {
+                // Simple overlap resolution
+                item.vx *= -1;
+                item.vy *= -1;
+              }
+            }
+          });
+
           return { ...item, x: newX, y: newY };
-        })
-      );
+        });
+      });
     };
 
     const intervalId = setInterval(tick, 50);
