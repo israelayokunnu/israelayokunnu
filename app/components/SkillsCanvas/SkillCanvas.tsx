@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { quadtree } from 'd3-quadtree';
 
 import { TechStackItem } from '@app/services/stack/stack.interface';
 import { TechStackList } from '@app/services/stack/stack.query';

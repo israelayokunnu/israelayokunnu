@@ -11,14 +11,14 @@ const Home = () => {
   const t = useTranslations('home');
 
   return (
-    <div className='w-full h-full text-cyan-950'>
+    <div className='w-full h-full'>
       <div className='absolute w-screen h-screen top-0 -z-10 bg-ia-primary'>
         <PortalShapeCanvas />
       </div>
       <div className='z-10 relative'>
         <div className='p-4 md:p-10 relative w-full'>
           <Header />
-          <div className='text-cyan-950 mt-20'>
+          <div className='mt-20'>
             <SlideInAnimatedSeriesTexts
               nodes={[
                 <div className='font-bold text-lg'>{t('hero.text2')}</div>,

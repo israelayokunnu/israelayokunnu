@@ -1,11 +1,4 @@
 import React from 'react';
-import {
-  FaGithub,
-  FaLinkedin,
-  FaTwitter,
-  FaStackOverflow,
-  FaGlobe,
-} from 'react-icons/fa';
 
 interface SocialLink {
   name: string;
@@ -36,7 +29,7 @@ const SocialLinks: React.FC = () => {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <span className='text-ligh text-sm capitalize'>{link.name}</span>
+          <span className='text-light  text-sm capitalize'>{link.name}</span>
         </a>
       ))}
     </div>
