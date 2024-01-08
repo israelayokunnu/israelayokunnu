@@ -9,6 +9,8 @@ import {
 import { Physics, CuboidCollider } from '@react-three/rapier';
 import Letter from './Letter';
 import useResponsiveQuery from '@util/hooks/useResponsiveQuery';
+import { useMemo } from 'react';
+import { TechStackList } from '@app/services/stack/stack.query';
 
 const PortalShapeCanvas = () => {
   const isMobile = useResponsiveQuery(768);
@@ -33,6 +35,16 @@ const PortalShapeCanvas = () => {
     : { position: [-100, 30, 100], fov: 12, near: 0.5, far: 300 };
 
   const textScale3D = isMobile ? 0.125 : 0.155;
+
+  const positions = useMemo(
+    () =>
+      TechStackList.map(() => [
+        Math.random() * 10 - 5,
+        Math.random() * 10 - 5,
+        Math.random() * 10 - 5,
+      ]),
+    []
+  );
 
   return (
     <Canvas dpr={[1.5, 2]} camera={cameraSettings}>
